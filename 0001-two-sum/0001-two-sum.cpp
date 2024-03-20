@@ -8,6 +8,7 @@ public:
             if(num_index.find(target - nums[i]) != num_index.end()){
                 ans[0] = num_index[target - nums[i]];
                 ans[1] = i;
+                break;
             }
             else{
                 num_index[nums[i]] = i;
