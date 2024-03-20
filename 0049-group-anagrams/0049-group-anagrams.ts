@@ -1,18 +1,21 @@
-class Solution {
-public:
-    vector<vector<string>> groupAnagrams(vector<string>& strs) {
-        unordered_map<string, vector<string>> str_strVector;
-        for (auto str : strs){
-            string word = str;  //we don't need to mutate the original value 
-            sort(word.begin(), word.end());
-            str_strVector[word].push_back(str);
-        }
-        
-        vector<vector<string>> ans;
-        for(auto x : str_strVector)
-           ans.push_back(x.second);
-        
-        return ans;
-            
+function groupAnagrams(strs: string[]): string[][] {
+    const strStrVector = new Map<string, string[]>();
+    for(const str of strs){
+        const sortedString = str.split('').sort().join('');
+        if(!strStrVector.has(sortedString))
+            strStrVector.set(sortedString, [])
+        strStrVector.get(sortedString).push(str);   
     }
+    
+    /*
+    // the traditional way 
+    const ans: string[][] = [];
+    for (const x of strStrVector.values()) {
+        ans.push(x);
+    }
+
+    return ans;
+    */
+    
+    return Array.from(strStrVector.values());
 };
