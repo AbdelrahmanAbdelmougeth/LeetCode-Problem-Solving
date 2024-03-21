@@ -11,7 +11,6 @@ public:
         
         for(auto x: num_frequent){
             bucket[x.second].push_back(x.first);
-            cout<<x.first<<" "<<x.second<<'\n';
         }
             
         
