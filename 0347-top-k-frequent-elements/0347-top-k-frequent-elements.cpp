@@ -15,19 +15,6 @@ struct NumFrequent {
     }
 };
 
-/*
-// this is an structure which implements the
-// operator overloading
-struct CompareFrequent {
-    bool operator()(num_frequent const& f1, num_frequent const& f2)
-    {
-        // return "true" if "f1" is ordered
-        // before "f2", for example:
-        return f1.frequent < f2.frequent;
-    }
-};
-*/
-
 class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
