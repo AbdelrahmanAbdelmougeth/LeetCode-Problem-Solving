@@ -2,16 +2,17 @@ class Solution {
 public:
     int trap(vector<int>& height) {
         int n = height.size();
-        vector<int> leftMax(n), rightMax(n);
-        for (int i = 1; i < n; ++i) 
-            leftMax[i] = max(height[i-1], leftMax[i-1]);
-        for (int i = n-2; i >= 0; --i) 
-            rightMax[i] = max(height[i+1], rightMax[i+1]);
+        vector<int> lMax(n), rMax(n);
+        lMax[0] = height[0];
+        for (int i = 1; i < n; i++) 
+            lMax[i] = max(height[i], lMax[i-1]);
+        rMax[n-1] = height[n - 1];
+        for (int i = n-2; i >= 0; i--) 
+            rMax[i] = max(height[i], rMax[i+1]);
         
         int ans = 0;
-        for (int i = 0; i < n; ++i) {
-            int waterLevel = min(leftMax[i], rightMax[i]);
-            if (waterLevel >= height[i]) ans += waterLevel - height[i];
+        for (int i = 1; i < n-1; i++) {
+            ans = ans + (min(lMax[i], rMax[i]) - height[i]);
         }
         return ans;
         
