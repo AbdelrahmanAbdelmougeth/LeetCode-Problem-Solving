@@ -1,11 +1,16 @@
+#define LESS_SPACE_COMPLEXITY 1
+
+#if LESS_SPACE_COMPLEXITY == 0
 struct index_height{
     int index;
     int height;
 };
+#endif
 
 class Solution {
 public:
     int largestRectangleArea(vector<int>& heights) {
+        #if LESS_SPACE_COMPLEXITY == 0
         stack<index_height> ind_h;
         int n = heights.size();
         int max_area = INT_MIN;
@@ -24,5 +29,27 @@ public:
             ind_h.pop();
         }
         return max_area;
+        #endif
+        
+        #if LESS_SPACE_COMPLEXITY == 1
+        // enhance the space complexity a little bit store only the index
+        stack<int> index_st;
+        int n = heights.size();
+        int max_area = INT_MIN;
+        for(int i=0; i<n; i++){
+            while(index_st.size() && heights[index_st.top()] > heights[i]){
+                int idx = index_st.top(); index_st.pop();
+                int curr_area = heights[idx] * (index_st.empty() ? i : (i - index_st.top() - 1));
+                max_area = max(max_area, curr_area);
+            }
+            index_st.push(i);
+        }
+        while(index_st.size()){
+            int idx = index_st.top(); index_st.pop();
+            int curr_area = heights[idx] * (index_st.empty() ? n : (n - index_st.top() - 1));
+            max_area = max(max_area, curr_area);
+        }
+        return max_area;
+        #endif
     }
 };
