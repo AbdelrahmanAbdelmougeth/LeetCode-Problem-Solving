@@ -58,7 +58,6 @@ public:
         }
         
         ListNode *curr = head;
-       
         while(rev_list != nullptr){
             ListNode *curr_next = curr->next;
             ListNode* rev_list_next = rev_list->next;
