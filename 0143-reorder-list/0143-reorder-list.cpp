@@ -43,6 +43,7 @@ public:
         ListNode* rev_list = reverseList(second_half_ptr);
         slow_ptr->next = nullptr;
        
+        /*
         //reverse is done perfectly
         ListNode *first_half = head;
         while(first_half != nullptr){
@@ -56,6 +57,7 @@ public:
             cout<<second_half->val;
             second_half = second_half->next;
         }
+        */
         
         ListNode *curr = head;
         while(rev_list != nullptr){
