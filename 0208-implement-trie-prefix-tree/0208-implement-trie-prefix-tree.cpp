@@ -1,3 +1,6 @@
+#define UNORDERED_MAP_IMPLEMENTATION    1
+
+#if UNORDERED_MAP_IMPLEMENTATION == 0
 struct TrieNode{
     TrieNode *child[26];
     bool isEnd;
@@ -51,6 +54,58 @@ public:
         return true;
     }
 };
+#endif
+
+#if UNORDERED_MAP_IMPLEMENTATION == 1
+struct TrieNode {
+    std::unordered_map<char, TrieNode*> child; // Use an unordered_map
+    bool isEnd;
+    TrieNode() : isEnd(false) {}
+};
+
+class Trie {
+private:
+    TrieNode* root;
+
+public:
+    Trie() {
+        root = new TrieNode();
+    }
+
+    void insert(std::string word) {
+        TrieNode* curr = root;
+        for (char x : word) {
+            if (curr->child.find(x) == curr->child.end()) {
+                curr->child[x] = new TrieNode();
+            }
+            curr = curr->child[x];
+        }
+        curr->isEnd = true;
+    }
+
+    bool search(std::string word) {
+        TrieNode* curr = root;
+        for (char x : word) {
+            if (curr->child.find(x) == curr->child.end()) {
+                return false;
+            }
+            curr = curr->child[x];
+        }
+        return curr->isEnd;
+    }
+
+    bool startsWith(std::string prefix) {
+        TrieNode* curr = root;
+        for (char x : prefix) {
+            if (curr->child.find(x) == curr->child.end()) {
+                return false;
+            }
+            curr = curr->child[x];
+        }
+        return true;
+    }
+};
+#endif
 
 /**
  * Your Trie object will be instantiated and called as such:
