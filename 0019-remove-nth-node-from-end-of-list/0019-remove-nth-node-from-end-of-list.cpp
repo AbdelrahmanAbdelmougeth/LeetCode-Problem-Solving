@@ -1,3 +1,5 @@
+#define DELAYED_POINTER_APPROACH  1
+
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -11,6 +13,7 @@
 class Solution {
 public:
     ListNode* removeNthFromEnd(ListNode* head, int n) {
+        #if DELAYED_POINTER_APPROACH == 0
         ListNode* curr = head;
         int no_of_nodes = 1;
         while(curr->next != nullptr){
@@ -20,7 +23,6 @@ public:
             
         int nth_node_from_start = no_of_nodes - n;
         int counter = 1; curr = head;
-        //cout<<n<<" "<<no_of_nodes<<" "<<nth_node_from_start<<" "<<endl;
         
         ListNode* to_delete;
         if(nth_node_from_start == 0){
@@ -34,58 +36,42 @@ public:
             curr = curr->next;
             counter++;
         }
-        
         to_delete = curr->next;
         curr->next = curr->next->next;
         delete to_delete;
         
         return head;
+        #endif
         
-        /*
-        ListNode* delayed_ptr = head;
-        ListNode* fast_ptr = head;
+        #if DELAYED_POINTER_APPROACH == 1
         
-        int number_of_nodes = 1;
+        ListNode* delayed = head;
         ListNode* curr = head;
+        int i = 1; int j = 1;
         
         while(curr->next != nullptr){
-            curr = curr->next;
-            number_of_nodes++;
+            curr = curr->next; i++;
+            if(i-j > n){
+                delayed = delayed->next;
+                j++;
+            }
         }
         
-        cout<<number_of_nodes<<curr->val;
-        
-        int i = number_of_nodes - n - 1;
-        
-        if(number_of_nodes == 1 && n == 1){
-            ListNode* curr2 = head;
-            head = nullptr;
-            delete curr2;
+        ListNode* to_delete;
+        if(i-j < n){
+            to_delete = head;
+            head = head->next;
+            delete to_delete;
             return head;
         }
         
-        if(number_of_nodes == 2 && n == 2){
-            ListNode* curr2 = head;
-            head = curr2->next;
-            delete curr2;
-            return head;
-        }
-        
-        ListNode* curr2 = head;
-        
-        while(i != 0){
-            curr2 = curr2->next;
-            i--;
-        }
-        
-        ListNode* to_pointed_at = curr2->next->next;
-        ListNode* to_delete = curr2->next;
-        
-        curr2->next = to_pointed_at;
+        to_delete = delayed->next;
+        delayed->next = delayed->next->next;
         delete to_delete;
         
         return head;
-        */
+        #endif
+        
         
     }
 };
