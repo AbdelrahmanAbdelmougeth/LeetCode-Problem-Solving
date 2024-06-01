@@ -13,6 +13,7 @@
 class Solution {
 public:
     ListNode* removeNthFromEnd(ListNode* head, int n) {
+        /*
         #if DELAYED_POINTER_APPROACH == 0
         ListNode* curr = head;
         int no_of_nodes = 1;
@@ -42,7 +43,7 @@ public:
         
         return head;
         #endif
-        
+        */
         #if DELAYED_POINTER_APPROACH == 1
         
         ListNode* delayed = head;
