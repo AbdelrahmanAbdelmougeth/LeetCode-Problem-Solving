@@ -1,27 +1,21 @@
 class Solution {
-public: 
-    int max(int a, int b){
-        return a > b ? a : b;
-    }
-    
+public:
     int lengthOfLongestSubstring(string s) {
-        //starting the substring with size of 0
-        int substring_starting_index = 0, substring_ending_index = 0, 
-        substring_length = 0;
+        if(s.size() <= 1)
+            return s.size();
         
-        //to check if there is a duplicate in characters
-        unordered_set<char> charSet;
+        unordered_set<char> char_set;
+        int l = 0;
         
-        while(substring_ending_index < s.size()){
-            if(charSet.find(s[substring_ending_index]) == charSet.end()){
-                charSet.insert(s[substring_ending_index]);
-                substring_ending_index++;
-                substring_length = max(substring_length, charSet.size());
-            }else{
-                charSet.erase(s[substring_starting_index]);
-                substring_starting_index++;
+        int max_length_of_longest_substring = INT_MIN;
+        for(int r=0; r<s.size(); r++){
+            while(char_set.find(s[r]) != char_set.end()){
+                char_set.erase(s[l]);
+                l++;
             }
+            max_length_of_longest_substring = max(max_length_of_longest_substring, (r-l+1));
+            char_set.insert(s[r]);
         }
-        return substring_length;
+        return max_length_of_longest_substring;
     }
 };
